@@ -43,10 +43,10 @@ export default function Home() {
         await db.mealHistory.bulkAdd(
           newMeals.map((m: any) => ({
             date: today,
-            mealType: m.mealType,
-            dishName: m.dishName,
+            mealType: typeof m?.mealType === 'string' ? m.mealType : 'meal',
+            dishName: typeof m?.dishName === 'string' ? m.dishName : 'Meal',
             status: 'pending',
-            ingredients: m.ingredients
+            ingredients: Array.isArray(m?.ingredients) ? m.ingredients : []
           }))
         );
       } else {
@@ -107,10 +107,14 @@ export default function Home() {
     }
   };
 
-  const mealOrder = { breakfast: 1, lunch: 2, snack: 3, dinner: 4 };
+  const mealOrder = { breakfast: 1, lunch: 2, snack: 3, dinner: 4, meal: 99 };
+  const normalizeMealType = (value: unknown) =>
+    typeof value === 'string' && value.trim().length > 0 ? value : 'meal';
   const sortedMeals = todaysMeals?.sort((a, b) => {
-    const aOrder = mealOrder[a.mealType.toLowerCase() as keyof typeof mealOrder] || 99;
-    const bOrder = mealOrder[b.mealType.toLowerCase() as keyof typeof mealOrder] || 99;
+    const aKey = normalizeMealType(a.mealType).toLowerCase() as keyof typeof mealOrder;
+    const bKey = normalizeMealType(b.mealType).toLowerCase() as keyof typeof mealOrder;
+    const aOrder = mealOrder[aKey] || 99;
+    const bOrder = mealOrder[bKey] || 99;
     return aOrder - bOrder;
   });
 
@@ -172,13 +176,15 @@ export default function Home() {
 
       <div className="space-y-4 px-2 pb-6">
         {visibleMeals?.map((meal) => {
-          const mealTypeKey = meal.mealType.toLowerCase() as keyof typeof mealOrder;
-          const translatedMealType = t(mealTypeKey) !== mealTypeKey ? t(mealTypeKey) : meal.mealType;
+          const normalizedMealType = normalizeMealType(meal.mealType);
+          const mealTypeKey = normalizedMealType.toLowerCase() as keyof typeof mealOrder;
+          const translatedMealType = t(mealTypeKey) !== mealTypeKey ? t(mealTypeKey) : normalizedMealType;
+          const ingredients = Array.isArray(meal.ingredients) ? meal.ingredients : [];
           
           return (
             <div key={meal.id} className="relative bg-white rounded-[28px] p-5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col sm:flex-row sm:items-center gap-4 transition-all">
               <button
-                onClick={() => handleRegenerateSingle(meal.id!, meal.mealType)}
+                onClick={() => handleRegenerateSingle(meal.id!, normalizedMealType)}
                 disabled={regeneratingId === meal.id}
                 className="absolute top-4 right-4 p-2 bg-[#F2F2F7] text-gray-500 rounded-full hover:bg-gray-200 active:scale-95 transition-all disabled:opacity-50"
                 title={t('regenerate')}
@@ -203,13 +209,13 @@ export default function Home() {
                 </div>
                 <h3 className="text-xl font-bold text-black leading-tight mb-2 tracking-tight">{meal.dishName}</h3>
                 <p className="text-sm text-gray-500 line-clamp-2 leading-relaxed">
-                  {meal.ingredients.join(', ')}
+                  {ingredients.join(', ')}
                 </p>
               </div>
               
               <div className="flex items-center space-x-2 sm:flex-col sm:space-x-0 sm:space-y-2 shrink-0">
                 <button
-                  onClick={() => openTutorial(meal.dishName, meal.ingredients, meal.tutorial, meal.id)}
+                  onClick={() => openTutorial(meal.dishName, ingredients, meal.tutorial, meal.id)}
                   className="flex-1 sm:flex-none flex items-center justify-center space-x-2 bg-[#F2F2F7] text-black px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-gray-200 transition-colors active:scale-95"
                 >
                   <ChefHat size={18} />
