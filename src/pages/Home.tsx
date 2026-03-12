@@ -110,9 +110,17 @@ export default function Home() {
   const mealOrder = { breakfast: 1, lunch: 2, snack: 3, dinner: 4, meal: 99 };
   const normalizeMealType = (value: unknown) =>
     typeof value === 'string' && value.trim().length > 0 ? value : 'meal';
+  const mapMealTypeKey = (value: string) => {
+    const lowered = value.toLowerCase();
+    if (['早餐', '早饭', '早飯', 'breakfast'].includes(value) || lowered === 'breakfast') return 'breakfast';
+    if (['午餐', '午饭', '午飯', 'lunch'].includes(value) || lowered === 'lunch') return 'lunch';
+    if (['加餐', '点心', '點心', 'snack'].includes(value) || lowered === 'snack') return 'snack';
+    if (['晚餐', '晚饭', '晚飯', 'dinner'].includes(value) || lowered === 'dinner') return 'dinner';
+    return 'meal';
+  };
   const sortedMeals = todaysMeals?.sort((a, b) => {
-    const aKey = normalizeMealType(a.mealType).toLowerCase() as keyof typeof mealOrder;
-    const bKey = normalizeMealType(b.mealType).toLowerCase() as keyof typeof mealOrder;
+    const aKey = mapMealTypeKey(normalizeMealType(a.mealType));
+    const bKey = mapMealTypeKey(normalizeMealType(b.mealType));
     const aOrder = mealOrder[aKey] || 99;
     const bOrder = mealOrder[bKey] || 99;
     return aOrder - bOrder;
@@ -177,9 +185,15 @@ export default function Home() {
       <div className="space-y-4 px-2 pb-6">
         {visibleMeals?.map((meal) => {
           const normalizedMealType = normalizeMealType(meal.mealType);
-          const mealTypeKey = normalizedMealType.toLowerCase() as keyof typeof mealOrder;
+          const mealTypeKey = mapMealTypeKey(normalizedMealType) as keyof typeof mealOrder;
           const translatedMealType = t(mealTypeKey) !== mealTypeKey ? t(mealTypeKey) : normalizedMealType;
           const ingredients = Array.isArray(meal.ingredients) ? meal.ingredients : [];
+          const dishName =
+            typeof meal.dishName === 'string' && meal.dishName.trim().length > 0
+              ? meal.dishName
+              : language === 'zh'
+              ? '未命名餐食'
+              : 'Untitled meal';
           
           return (
             <div key={meal.id} className="relative bg-white rounded-[28px] p-5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col sm:flex-row sm:items-center gap-4 transition-all">
@@ -207,7 +221,7 @@ export default function Home() {
                     </span>
                   )}
                 </div>
-                <h3 className="text-xl font-bold text-black leading-tight mb-2 tracking-tight">{meal.dishName}</h3>
+                <h3 className="text-xl font-bold text-black leading-tight mb-2 tracking-tight">{dishName}</h3>
                 <p className="text-sm text-gray-500 line-clamp-2 leading-relaxed">
                   {ingredients.join(', ')}
                 </p>
