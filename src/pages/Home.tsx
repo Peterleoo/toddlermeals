@@ -201,10 +201,10 @@ export default function Home() {
                 <button
                   onClick={() => handleRegenerateSingle(meal.id!, meal.mealType)}
                   disabled={regeneratingId === meal.id}
-                  className="ml-3 p-2 bg-[#F2F2F7] text-gray-500 rounded-full hover:bg-gray-200 active:scale-95 transition-all disabled:opacity-50 shrink-0"
+                  className="ml-3 p-1.5 bg-[#F2F2F7] text-gray-500 rounded-full hover:bg-gray-200 active:scale-95 transition-all disabled:opacity-50 shrink-0"
                   title={t('regenerate')}
                 >
-                  <RefreshCw size={16} className={clsx(regeneratingId === meal.id && "animate-spin")} />
+                  <RefreshCw size={14} className={clsx(regeneratingId === meal.id && "animate-spin")} />
                 </button>
               </div>
               
@@ -214,7 +214,7 @@ export default function Home() {
                     e.stopPropagation();
                     openTutorial(meal.dishName, meal.ingredients, meal.tutorial, meal.id);
                   }}
-                  className="flex-2 flex items-center justify-center space-x-2 bg-[#F2F2F7] text-black px-5 py-3 rounded-[20px] text-sm font-semibold hover:bg-gray-200 transition-colors active:scale-95"
+                  className="flex-3 flex items-center justify-center space-x-2 bg-[#F2F2F7] text-black px-5 py-3 rounded-[20px] text-sm font-semibold hover:bg-gray-200 transition-colors active:scale-95"
                 >
                   <ChefHat size={18} />
                   <span>{t('recipe')}</span>
