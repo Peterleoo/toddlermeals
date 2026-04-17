@@ -2,10 +2,10 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open('baby-meals-cache').then((cache) => {
       return cache.addAll([
-        '/toddlermeals',
-        '/toddlermeals/index.html',
-        '/toddlermeals/assets/index-25Juu2U-.css',
-        '/toddlermeals/assets/index-DbpSw72k.js'
+        '/',
+        '/index.html',
+        '/assets/index-25Juu2U-.css',
+        '/assets/index-DbpSw72k.js'
       ]);
     })
   );

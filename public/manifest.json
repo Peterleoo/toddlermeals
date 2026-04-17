@@ -2,18 +2,18 @@
   "name": "宝宝辅食",
   "short_name": "宝宝辅食",
   "description": "为宝宝提供营养均衡的餐食计划",
-  "start_url": "/toddlermeals",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#F2F2F7",
   "theme_color": "#007AFF",
   "icons": [
     {
-      "src": "/toddlermeals/icons/icon-192x192.png",
+      "src": "/icons/icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/toddlermeals/icons/icon-512x512.png",
+      "src": "/icons/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
