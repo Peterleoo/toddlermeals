@@ -5,21 +5,24 @@ import Preferences from './pages/Preferences';
 import Reports from './pages/Reports';
 import Settings from './pages/Settings';
 import { LanguageProvider } from './contexts/LanguageContext';
+import { ModalProvider } from './contexts/ModalContext';
 
 export default function App() {
   return (
     <LanguageProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="preferences" element={<Preferences />} />
-            <Route path="reports" element={<Reports />} />
-            <Route path="settings" element={<Settings />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <ModalProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="preferences" element={<Preferences />} />
+              <Route path="reports" element={<Reports />} />
+              <Route path="settings" element={<Settings />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </ModalProvider>
     </LanguageProvider>
   );
 }

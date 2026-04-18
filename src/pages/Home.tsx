@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { format } from 'date-fns';
 import { CheckCircle2, XCircle, ChefHat, RefreshCw, AlertCircle } from 'lucide-react';
@@ -7,9 +7,11 @@ import { generateDailyPlan, generateSingleMeal, generateTutorial } from '../serv
 import TutorialModal from '../components/TutorialModal';
 import { clsx } from 'clsx';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useModal } from '../contexts/ModalContext';
 
 export default function Home() {
   const { language, t } = useLanguage();
+  const { setIsModalOpen } = useModal();
   const today = format(new Date(), 'yyyy-MM-dd');
   const [isGenerating, setIsGenerating] = useState(false);
   const [regeneratingId, setRegeneratingId] = useState<number | null>(null);
@@ -86,6 +88,7 @@ export default function Home() {
   const openTutorial = async (dishName: string, ingredients: string[], existingTutorial?: string, id?: number) => {
     setTutorialTitle(dishName);
     setIsTutorialOpen(true);
+    setIsModalOpen(true);
     
     if (existingTutorial) {
       setTutorialContent(existingTutorial);
@@ -248,7 +251,10 @@ export default function Home() {
 
       <TutorialModal
         isOpen={isTutorialOpen}
-        onClose={() => setIsTutorialOpen(false)}
+        onClose={() => {
+          setIsTutorialOpen(false);
+          setIsModalOpen(false);
+        }}
         title={tutorialTitle}
         content={tutorialContent}
         isLoading={isTutorialLoading}
