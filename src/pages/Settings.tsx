@@ -170,12 +170,12 @@ export default function Settings() {
           <div className="w-10 h-10 bg-[#9C27B0]/10 rounded-full flex items-center justify-center">
             <Brain className="text-[#9C27B0]" size={20} />
           </div>
-          <h3 className="text-xl font-bold text-black tracking-tight">AI 设置</h3>
+          <h3 className="text-xl font-bold text-black tracking-tight">{t('aiSettings')}</h3>
         </div>
         
         <div className="p-6 space-y-6">
           <div className="flex items-center justify-between">
-            <label className="block text-sm font-bold text-gray-700">启用 AI 餐单生成</label>
+            <label className="block text-sm font-bold text-gray-700">{t('enableAiGeneration')}</label>
             <button
               onClick={() => {
                 setAiEnabled(!aiEnabled);
@@ -198,21 +198,21 @@ export default function Settings() {
           {aiEnabled && (
             <>
               <div className="space-y-3">
-                <label className="block text-sm font-bold text-gray-700 uppercase tracking-wider">API Key</label>
+                <label className="block text-sm font-bold text-gray-700 uppercase tracking-wider">{t('apiKey')}</label>
                 <div className="flex items-center space-x-3">
                   <Key size={20} className="text-gray-500 shrink-0" />
                   <input
                     type="password"
                     value={apiKey}
                     onChange={(e) => setApiKey(e.target.value)}
-                    placeholder="输入 Gemini API Key"
+                    placeholder={language === 'zh' ? "输入 Gemini API Key" : "Enter Gemini API Key"}
                     className="flex-1 bg-[#F2F2F7] border-0 rounded-[20px] px-5 py-3.5 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition-all"
                   />
                 </div>
               </div>
 
               <div className="space-y-3">
-                <label className="block text-sm font-bold text-gray-700 uppercase tracking-wider">模型选择</label>
+                <label className="block text-sm font-bold text-gray-700 uppercase tracking-wider">{t('modelSelection')}</label>
                 <select
                   value={model}
                   onChange={(e) => setModel(e.target.value)}

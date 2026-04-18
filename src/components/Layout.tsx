@@ -11,9 +11,7 @@ export default function Layout() {
 
   return (
     <div className="flex flex-col h-screen bg-[#F2F2F7] text-black font-sans selection:bg-blue-200">
-      <header className="bg-[#F2F2F7]/80 backdrop-blur-xl px-6 py-4 sticky top-0 z-10 flex items-center justify-between border-b border-black/5">
-        <div className="w-8"></div>
-        <h1 className="text-xl font-bold tracking-tight text-black text-center">{t('appTitle')}</h1>
+      <div className="sticky top-0 z-10 flex items-center justify-end p-4 bg-[#F2F2F7]/80 backdrop-blur-xl border-b border-black/5">
         <button 
           onClick={() => navigate('/settings')}
           className="p-2 text-gray-500 hover:text-[#007AFF] hover:bg-gray-200/50 rounded-full transition-colors flex items-center justify-center active:scale-95"
@@ -21,7 +19,7 @@ export default function Layout() {
         >
           <SettingsIcon size={24} />
         </button>
-      </header>
+      </div>
 
       <main className="flex-1 overflow-y-auto p-4 pb-28">
         <Outlet />

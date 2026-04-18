@@ -76,6 +76,12 @@ export const translations: Translations = {
   save: { zh: '保存设置', en: 'Save Settings' },
   saved: { zh: '已保存', en: 'Saved' },
   
+  // AI Settings
+  aiSettings: { zh: 'AI 设置', en: 'AI Settings' },
+  enableAiGeneration: { zh: '启用 AI 餐单生成', en: 'Enable AI Meal Generation' },
+  apiKey: { zh: 'API Key', en: 'API Key' },
+  modelSelection: { zh: '模型选择', en: 'Model Selection' },
+  
   // Meal Types
   breakfast: { zh: '早餐', en: 'Breakfast' },
   lunch: { zh: '午餐', en: 'Lunch' },
