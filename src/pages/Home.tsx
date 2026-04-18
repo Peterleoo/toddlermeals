@@ -9,6 +9,24 @@ import { clsx } from 'clsx';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useModal } from '../contexts/ModalContext';
 
+// 动画样式
+const styles = `
+  @keyframes flyAway {
+    0% {
+      transform: scale(1) translateX(0) translateY(0);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(0.8) translateX(100px) translateY(-100px);
+      opacity: 0;
+    }
+  }
+  
+  .animate-fly-away {
+    animation: flyAway 0.5s ease-out forwards;
+  }
+`;
+
 export default function Home() {
   const { language, t } = useLanguage();
   const { setIsModalOpen } = useModal();
@@ -22,6 +40,7 @@ export default function Home() {
   const [tutorialTitle, setTutorialTitle] = useState('');
   const [tutorialContent, setTutorialContent] = useState('');
   const [isTutorialLoading, setIsTutorialLoading] = useState(false);
+  const [flyingMealId, setFlyingMealId] = useState<number | null>(null);
 
   const todaysMeals = useLiveQuery(
     () => db.mealHistory.where('date').equals(today).toArray(),
@@ -82,7 +101,16 @@ export default function Home() {
   };
 
   const updateMealStatus = async (id: number, status: 'eaten' | 'rejected' | 'partial') => {
-    await db.mealHistory.update(id, { status });
+    if (status === 'rejected') {
+      setFlyingMealId(id);
+      // 等待动画完成后再更新状态
+      setTimeout(async () => {
+        await db.mealHistory.update(id, { status });
+        setFlyingMealId(null);
+      }, 500);
+    } else {
+      await db.mealHistory.update(id, { status });
+    }
   };
 
   const openTutorial = async (dishName: string, ingredients: string[], existingTutorial?: string, id?: number) => {
@@ -121,6 +149,7 @@ export default function Home() {
 
   return (
     <div className="space-y-6 max-w-2xl mx-auto px-2">
+      <style>{styles}</style>
       <div className="flex items-center justify-between px-2">
         <div>
           <h2 className="text-3xl font-bold tracking-tight text-black">{t('todaysPlan')}</h2>
@@ -179,7 +208,13 @@ export default function Home() {
           const translatedMealType = t(mealTypeKey) !== mealTypeKey ? t(mealTypeKey) : meal.mealType;
           
           return (
-            <div key={meal.id} className="relative bg-white rounded-[28px] p-5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col gap-4 transition-all">
+            <div 
+              key={meal.id} 
+              className={clsx(
+                "relative bg-white rounded-[28px] p-5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col gap-4 transition-all",
+                flyingMealId === meal.id && "animate-fly-away"
+              )}
+            >
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <div className="flex items-center space-x-2 mb-2">
