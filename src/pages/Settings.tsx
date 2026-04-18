@@ -29,8 +29,12 @@ export default function Settings() {
         setAiEnabled(settings.aiEnabled || false);
         setApiKey(settings.apiKey || '');
         setModel(settings.model || 'gemini-3-flash-preview');
+      } else {
+        setAiEnabled(false);
       }
-    } catch (e) {}
+    } catch (e) {
+      setAiEnabled(false);
+    }
   }, []);
 
   const handleSave = () => {
@@ -173,7 +177,12 @@ export default function Settings() {
           <div className="flex items-center justify-between">
             <label className="block text-sm font-bold text-gray-700">启用 AI 餐单生成</label>
             <button
-              onClick={() => setAiEnabled(!aiEnabled)}
+              onClick={() => {
+                setAiEnabled(!aiEnabled);
+                if (!aiEnabled) {
+                  setIsSaved(false);
+                }
+              }}
               className={clsx(
                 "w-12 h-6 rounded-full transition-colors relative",
                 aiEnabled ? "bg-[#34C759]" : "bg-gray-300"
@@ -186,46 +195,50 @@ export default function Settings() {
             </button>
           </div>
 
-          <div className="space-y-3">
-            <label className="block text-sm font-bold text-gray-700 uppercase tracking-wider">API Key</label>
-            <div className="flex items-center space-x-3">
-              <Key size={20} className="text-gray-500 shrink-0" />
-              <input
-                type="password"
-                value={apiKey}
-                onChange={(e) => setApiKey(e.target.value)}
-                placeholder="输入 Gemini API Key"
-                className="flex-1 bg-[#F2F2F7] border-0 rounded-[20px] px-5 py-3.5 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition-all"
-              />
-            </div>
-          </div>
+          {aiEnabled && (
+            <>
+              <div className="space-y-3">
+                <label className="block text-sm font-bold text-gray-700 uppercase tracking-wider">API Key</label>
+                <div className="flex items-center space-x-3">
+                  <Key size={20} className="text-gray-500 shrink-0" />
+                  <input
+                    type="password"
+                    value={apiKey}
+                    onChange={(e) => setApiKey(e.target.value)}
+                    placeholder="输入 Gemini API Key"
+                    className="flex-1 bg-[#F2F2F7] border-0 rounded-[20px] px-5 py-3.5 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition-all"
+                  />
+                </div>
+              </div>
 
-          <div className="space-y-3">
-            <label className="block text-sm font-bold text-gray-700 uppercase tracking-wider">模型选择</label>
-            <select
-              value={model}
-              onChange={(e) => setModel(e.target.value)}
-              className="w-full bg-[#F2F2F7] border-0 rounded-[20px] px-5 py-3.5 text-black focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition-all"
-            >
-              <option value="gemini-3-flash-preview">Gemini 3 Flash</option>
-              <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
-              <option value="gemini-2.5-pro">Gemini 2.5 Pro</option>
-            </select>
-          </div>
+              <div className="space-y-3">
+                <label className="block text-sm font-bold text-gray-700 uppercase tracking-wider">模型选择</label>
+                <select
+                  value={model}
+                  onChange={(e) => setModel(e.target.value)}
+                  className="w-full bg-[#F2F2F7] border-0 rounded-[20px] px-5 py-3.5 text-black focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition-all"
+                >
+                  <option value="gemini-3-flash-preview">Gemini 3 Flash</option>
+                  <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
+                  <option value="gemini-2.5-pro">Gemini 2.5 Pro</option>
+                </select>
+              </div>
 
-          <button
-            onClick={handleSaveAiSettings}
-            className="w-full bg-[#007AFF] text-white py-3.5 rounded-[20px] font-semibold shadow-sm hover:bg-[#0056b3] transition-colors active:scale-95 flex items-center justify-center space-x-2"
-          >
-            {isSaved ? (
-              <>
-                <CheckCircle2 size={20} />
-                <span>{t('saved')}</span>
-              </>
-            ) : (
-              <span>{t('save')}</span>
-            )}
-          </button>
+              <button
+                onClick={handleSaveAiSettings}
+                className="w-full bg-[#007AFF] text-white py-3.5 rounded-[20px] font-semibold shadow-sm hover:bg-[#0056b3] transition-colors active:scale-95 flex items-center justify-center space-x-2"
+              >
+                {isSaved ? (
+                  <>
+                    <CheckCircle2 size={20} />
+                    <span>{t('saved')}</span>
+                  </>
+                ) : (
+                  <span>{t('save')}</span>
+                )}
+              </button>
+            </>
+          )}
         </div>
       </div>
 
