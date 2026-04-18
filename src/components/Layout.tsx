@@ -1,5 +1,5 @@
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
-import { Home, Heart, BarChart2, Settings as SettingsIcon } from 'lucide-react';
+import { Home, Heart, BarChart2 } from 'lucide-react';
 import { clsx } from 'clsx';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useModal } from '../contexts/ModalContext';
@@ -11,15 +11,7 @@ export default function Layout() {
 
   return (
     <div className="flex flex-col h-screen bg-[#F2F2F7] text-black font-sans selection:bg-blue-200">
-      <div className="sticky top-0 z-10 flex items-center justify-end p-4 bg-[#F2F2F7]/80 backdrop-blur-xl border-b border-black/5">
-        <button 
-          onClick={() => navigate('/settings')}
-          className="p-2 text-gray-500 hover:text-[#007AFF] hover:bg-gray-200/50 rounded-full transition-colors flex items-center justify-center active:scale-95"
-          title={t('settingsTitle')}
-        >
-          <SettingsIcon size={24} />
-        </button>
-      </div>
+
 
       <main className="flex-1 overflow-y-auto p-4 pb-28">
         <Outlet />
