@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { format } from 'date-fns';
-import { CheckCircle2, XCircle, ChefHat, RefreshCw, AlertCircle, Settings } from 'lucide-react';
+import { CheckCircle2, XCircle, ChefHat, RefreshCw, AlertCircle, Settings as SettingsIcon } from 'lucide-react';
 import { db } from '../db';
 import { generateDailyPlan, generateSingleMeal, generateTutorial } from '../services/mealGenerator';
 import TutorialModal from '../components/TutorialModal';
