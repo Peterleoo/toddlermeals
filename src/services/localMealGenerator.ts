@@ -27,7 +27,12 @@ const mealTemplates = {
     { dishName: '鸡肉粥', ingredients: ['大米 50g', '鸡肉 25g', '姜丝 3g'] },
     { dishName: '豆腐粥', ingredients: ['大米 50g', '豆腐 40g', '青菜 15g'] },
     { dishName: '西兰花鸡蛋粥', ingredients: ['大米 40g', '西兰花 20g', '鸡蛋 1个'] },
-    { dishName: '香蕉燕麦糊', ingredients: ['香蕉 1根', '燕麦 20g', '牛奶 80ml'] }
+    { dishName: '香蕉燕麦糊', ingredients: ['香蕉 1根', '燕麦 20g', '牛奶 80ml'] },
+    { dishName: '山药小米粥', ingredients: ['小米 40g', '山药 50g', '红枣 2颗'] },
+    { dishName: '番茄鸡蛋羹', ingredients: ['鸡蛋 1个', '番茄 20g', '温水 100ml'] },
+    { dishName: '蓝莓燕麦粥', ingredients: ['燕麦 30g', '蓝莓 20g', '牛奶 100ml'] },
+    { dishName: '玉米粥', ingredients: ['玉米糁 40g', '大米 20g'] },
+    { dishName: '胡萝卜南瓜粥', ingredients: ['大米 40g', '胡萝卜 20g', '南瓜 30g'] }
   ],
   lunch: [
     { dishName: '软米饭配番茄炒蛋', ingredients: ['米饭 60g', '番茄 50g', '鸡蛋 1个', '植物油 5ml'] },
@@ -54,7 +59,12 @@ const mealTemplates = {
     { dishName: '蔬菜豆腐汤配米饭', ingredients: ['米饭 60g', '豆腐 50g', '青菜 20g', '胡萝卜 20g', '水 150ml'] },
     { dishName: '鸡肉炒饭', ingredients: ['米饭 60g', '鸡肉 25g', '胡萝卜 20g', '青菜 20g', '植物油 5ml'] },
     { dishName: '鳕鱼豆腐粥', ingredients: ['大米 50g', '鳕鱼 30g', '豆腐 40g', '青菜 20g'] },
-    { dishName: '软米饭配炒青菜', ingredients: ['米饭 60g', '青菜 50g', '植物油 5ml', '盐 1g'] }
+    { dishName: '软米饭配炒青菜', ingredients: ['米饭 60g', '青菜 50g', '植物油 5ml', '盐 1g'] },
+    { dishName: '番茄鸡蛋面', ingredients: ['面条 50g', '番茄 50g', '鸡蛋 1个', '青菜 20g', '植物油 5ml'] },
+    { dishName: '猪肉白菜饺子', ingredients: ['饺子皮 10张', '猪肉 30g', '白菜 30g', '葱花 5g'] },
+    { dishName: '软米饭配宫保鸡丁', ingredients: ['米饭 60g', '鸡肉 30g', '花生 10g', '胡萝卜 20g', '植物油 5ml'] },
+    { dishName: '南瓜粥配蒸蛋', ingredients: ['南瓜 50g', '大米 40g', '鸡蛋 1个'] },
+    { dishName: '牛肉蔬菜汤配馒头', ingredients: ['牛肉 25g', '胡萝卜 20g', '青菜 20g', '馒头 1个', '水 150ml'] }
   ],
   snack: [
     { dishName: '苹果泥', ingredients: ['苹果 1个'] },
@@ -81,7 +91,12 @@ const mealTemplates = {
     { dishName: '蓝莓泥', ingredients: ['蓝莓 50g'] },
     { dishName: '蒸土豆', ingredients: ['土豆 50g'] },
     { dishName: '蒸山药', ingredients: ['山药 50g'] },
-    { dishName: '蒸紫薯', ingredients: ['紫薯 50g'] }
+    { dishName: '蒸紫薯', ingredients: ['紫薯 50g'] },
+    { dishName: '芒果泥', ingredients: ['芒果 1个'] },
+    { dishName: '西瓜片', ingredients: ['西瓜 100g'] },
+    { dishName: '哈密瓜片', ingredients: ['哈密瓜 100g'] },
+    { dishName: '黄瓜条', ingredients: ['黄瓜 50g'] },
+    { dishName: '小番茄', ingredients: ['小番茄 50g'] }
   ],
   dinner: [
     { dishName: '小米南瓜粥', ingredients: ['小米 40g', '南瓜 50g'] },
@@ -108,7 +123,12 @@ const mealTemplates = {
     { dishName: '鸡肉蔬菜汤配馒头', ingredients: ['鸡肉 25g', '青菜 20g', '胡萝卜 20g', '馒头 1个', '水 150ml'] },
     { dishName: '小米粥配小馒头', ingredients: ['小米 40g', '小馒头 1个'] },
     { dishName: '豆腐粥', ingredients: ['大米 50g', '豆腐 50g', '青菜 20g'] },
-    { dishName: '蔬菜面条', ingredients: ['面条 50g', '青菜 20g', '胡萝卜 20g', '西兰花 20g'] }
+    { dishName: '蔬菜面条', ingredients: ['面条 50g', '青菜 20g', '胡萝卜 20g', '西兰花 20g'] },
+    { dishName: '软米饭配炒青菜', ingredients: ['米饭 60g', '青菜 50g', '植物油 5ml', '盐 1g'] },
+    { dishName: '鸡蛋番茄面', ingredients: ['面条 50g', '鸡蛋 1个', '番茄 50g', '青菜 20g'] },
+    { dishName: '虾仁豆腐粥', ingredients: ['大米 50g', '虾仁 25g', '豆腐 40g', '青菜 20g'] },
+    { dishName: '小米山药粥', ingredients: ['小米 40g', '山药 50g', '红枣 2颗'] },
+    { dishName: '软米饭配清蒸虾', ingredients: ['米饭 60g', '虾 30g', '姜丝 3g', '葱段 3g'] }
   ]
 };
 
