@@ -1,5 +1,5 @@
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
-import { Home, Heart, BarChart2 } from 'lucide-react';
+import { Home, Heart, BarChart2, Settings as SettingsIcon } from 'lucide-react';
 import { clsx } from 'clsx';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useModal } from '../contexts/ModalContext';
@@ -66,6 +66,22 @@ export default function Layout() {
                   <>
                     <BarChart2 size={28} strokeWidth={isActive ? 2.5 : 2} />
                     <span className="text-xs font-semibold">{t('navReports')}</span>
+                  </>
+                )}
+              </NavLink>
+              <NavLink
+                to="/settings"
+                className={({ isActive }) =>
+                  clsx(
+                    "flex flex-col items-center justify-center flex-1 h-full space-y-1 transition-all duration-300 active:scale-95",
+                    isActive ? "text-[#007AFF]" : "text-gray-500"
+                  )
+                }
+              >
+                {({ isActive }) => (
+                  <>
+                    <SettingsIcon size={28} strokeWidth={isActive ? 2.5 : 2} />
+                    <span className="text-xs font-semibold">{t('navSettings')}</span>
                   </>
                 )}
               </NavLink>

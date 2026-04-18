@@ -1,19 +1,17 @@
 import { useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { format } from 'date-fns';
-import { CheckCircle2, XCircle, ChefHat, RefreshCw, AlertCircle, Settings as SettingsIcon } from 'lucide-react';
+import { CheckCircle2, XCircle, ChefHat, RefreshCw, AlertCircle } from 'lucide-react';
 import { db } from '../db';
 import { generateDailyPlan, generateSingleMeal, generateTutorial } from '../services/mealGenerator';
 import TutorialModal from '../components/TutorialModal';
 import { clsx } from 'clsx';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useModal } from '../contexts/ModalContext';
-import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
   const { language, t } = useLanguage();
   const { setIsModalOpen } = useModal();
-  const navigate = useNavigate();
   const today = format(new Date(), 'yyyy-MM-dd');
   const [isGenerating, setIsGenerating] = useState(false);
   const [regeneratingId, setRegeneratingId] = useState<number | null>(null);
@@ -128,23 +126,14 @@ export default function Home() {
           <h2 className="text-3xl font-bold tracking-tight text-black">{t('todaysPlan')}</h2>
           <p className="text-gray-500 font-medium mt-1">{language === 'zh' ? format(new Date(), 'yyyy/M/d') + ' ' + ['周日', '周一', '周二', '周三', '周四', '周五', '周六'][new Date().getDay()] : format(new Date(), 'EEEE, MMMM d')}</p>
         </div>
-        <div className="flex items-center space-x-3">
-          <button
-            onClick={handleGeneratePlan}
-            disabled={isGenerating}
-            className="flex items-center space-x-2 bg-[#007AFF]/10 text-[#007AFF] px-4 py-2 rounded-full font-semibold hover:bg-[#007AFF]/20 transition-colors disabled:opacity-50 active:scale-95"
-          >
-            <RefreshCw size={18} className={clsx(isGenerating && "animate-spin")} />
-            <span>{todaysMeals?.length ? t('regenerate') : t('generatePlan')}</span>
-          </button>
-          <button
-            onClick={() => navigate('/settings')}
-            className="p-2 text-gray-500 hover:text-[#007AFF] hover:bg-gray-200/50 rounded-full transition-colors flex items-center justify-center active:scale-95"
-            title={t('settingsTitle')}
-          >
-            <SettingsIcon size={20} />
-          </button>
-        </div>
+        <button
+          onClick={handleGeneratePlan}
+          disabled={isGenerating}
+          className="flex items-center space-x-2 bg-[#007AFF]/10 text-[#007AFF] px-4 py-2 rounded-full font-semibold hover:bg-[#007AFF]/20 transition-colors disabled:opacity-50 active:scale-95"
+        >
+          <RefreshCw size={18} className={clsx(isGenerating && "animate-spin")} />
+          <span>{todaysMeals?.length ? t('regenerate') : t('generatePlan')}</span>
+        </button>
       </div>
 
       {error && (
