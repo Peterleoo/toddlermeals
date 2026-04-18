@@ -25,6 +25,37 @@ const styles = `
   .animate-fly-away {
     animation: flyAway 0.5s ease-out forwards;
   }
+  
+  @keyframes greenFill {
+    0% {
+      transform: scale(0);
+      opacity: 0.5;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes checkScale {
+    0% {
+      transform: scale(0);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  .animate-green-fill {
+    animation: greenFill 0.3s ease-out forwards;
+  }
+  
+  .animate-check-scale {
+    animation: checkScale 0.3s ease-out forwards;
+  }
 `;
 
 export default function Home() {
@@ -41,6 +72,7 @@ export default function Home() {
   const [tutorialContent, setTutorialContent] = useState('');
   const [isTutorialLoading, setIsTutorialLoading] = useState(false);
   const [flyingMealId, setFlyingMealId] = useState<number | null>(null);
+  const [checkedMealId, setCheckedMealId] = useState<number | null>(null);
 
   const todaysMeals = useLiveQuery(
     () => db.mealHistory.where('date').equals(today).toArray(),
@@ -108,6 +140,13 @@ export default function Home() {
         await db.mealHistory.update(id, { status });
         setFlyingMealId(null);
       }, 500);
+    } else if (status === 'eaten') {
+      setCheckedMealId(id);
+      // 等待动画完成后再更新状态
+      setTimeout(async () => {
+        await db.mealHistory.update(id, { status });
+        setCheckedMealId(null);
+      }, 300);
     } else {
       await db.mealHistory.update(id, { status });
     }
@@ -262,11 +301,14 @@ export default function Home() {
                   onClick={() => updateMealStatus(meal.id!, 'eaten')}
                   className={clsx(
                     "flex-1 flex items-center justify-center p-3 rounded-[20px] transition-all active:scale-95",
-                    meal.status === 'eaten' ? "bg-[#34C759]/10 text-[#34C759] ring-2 ring-[#34C759]" : "bg-[#F2F2F7] text-gray-400 hover:bg-[#34C759]/10 hover:text-[#34C759]"
+                    (meal.status === 'eaten' || checkedMealId === meal.id) ? "bg-[#34C759]/10 text-[#34C759] ring-2 ring-[#34C759] animate-green-fill" : "bg-[#F2F2F7] text-gray-400 hover:bg-[#34C759]/10 hover:text-[#34C759]"
                   )}
                   title={t('eaten')}
                 >
-                  <CheckCircle2 size={20} />
+                  <CheckCircle2 
+                    size={20} 
+                    className={clsx(checkedMealId === meal.id && "animate-check-scale")}
+                  />
                 </button>
                 <button
                   onClick={() => updateMealStatus(meal.id!, 'rejected')}
